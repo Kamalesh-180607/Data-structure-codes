@@ -1,0 +1,158 @@
+//ARRAY IMPLEMENTATION
+#include<iostream>
+using namespace std;
+
+int n;
+
+int Search(int arr[], int k) {
+    for (int i = 0; i < n; i++) {
+        if (arr[i] == k) {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int Max(int arr[]) {
+    int m = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (m < arr[i])
+            m = arr[i];
+    }
+    return m;
+}
+
+int Min(int arr[]) {
+    int m = arr[0];
+    for (int i = 1; i < n; i++) {
+        if (m > arr[i])
+            m = arr[i];
+    }
+    return m;
+}
+
+void Delete(int arr[], int p) {
+    for (int i = p; i < n - 1; i++)
+        arr[i] = arr[i + 1];
+    n--;
+}
+
+void Insert(int arr[], int p, int k) {
+    for (int i = n; i > p; i--)
+        arr[i] = arr[i - 1];
+    arr[p] = k;
+    n++;
+}
+
+void Display(int arr[]) {
+    cout << "The elements in array:\n";
+    for (int i = 0; i < n; i++)
+        cout << arr[i] << endl;
+}
+
+int main() {
+    int k, p;
+    int List[100000];
+
+    cout << "Enter the size of list: ";
+    cin >> n;
+
+    cout << "Enter the elements: ";
+    for (int i = 0; i < n; i++)
+        cin >> List[i];
+
+    while (1) {
+        cout << "\nchoose one option\n";
+        cout << "i: Insertion\n";
+        cout << "d: Deletion\n";
+        cout << "s: Searching\n";
+        cout << "M: Maximum\n";
+        cout << "m: Minimum\n";
+        cout << "p: Display\n";
+        cout << "e: Exit\n";
+
+        char ch;
+        cin >> ch;
+
+        switch (ch) {
+            case 'i':
+            case 'I': {
+                cout << "Enter value to insert: ";
+                cin >> k;
+                cout << "Enter position to insert: ";
+                cin >> p;
+                if (p <= n && p >= 0) {
+                    Insert(List, p, k);
+                    cout << "Element Successfully inserted\n";
+                    break;
+                } else {
+                    cout << "Enter valid positon\n";
+                    break;
+                }
+            }
+
+            case 'd':
+            case 'D': {
+                cout << "Do you know the position of element to delete (y/n): ";
+                cin >> ch;
+                if (ch == 'y') {
+                    cout << "Enter postion of element to delete: ";
+                    cin >> p;
+                    if (p <= n && p >= 0) {
+                        Delete(List, p);
+                        cout << "Element successfully deleted!\n";
+                    } else
+                        cout << "Enter valid positon\n";
+                } else if (ch == 'n') {
+                    cout << "Enter value to delete: ";
+                    cin >> k;
+                    int p = Search(List, k);
+                    if (p != -1) {
+                        Delete(List, p);
+                        cout << "Element successfully deleted\n";
+                    } else
+                        cout << "Element was not found\n";
+                } else
+                    cout << "Type a valid choice y or n " << endl;
+                break;
+            }
+
+            case 's':
+            case 'S': {
+                cout << "Enter value of element to search: ";
+                cin >> k;
+                p = Search(List, k);
+                if (p != -1) {
+                    cout << "The element was found in index: " << p << endl;
+                } else
+                    cout << "The element was not found\n";
+                break;
+            }
+
+            case 'M': {
+                cout << "Maximum value present in list : " << Max(List) << endl;
+                break;
+            }
+
+            case 'm': {
+                cout << "Minimum value present in list: " << Min(List) << endl;
+                break;
+            }
+
+            case 'p':
+            case 'P': {
+                Display(List);
+                break;
+            }
+
+            case 'e':
+            case 'E': {
+                cout << "Program End \n";
+                return 0;
+            }
+
+            default:
+                cout << "Enter proper character \n";
+        }
+    }
+}
